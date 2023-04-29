@@ -1,6 +1,7 @@
 #include <iostream>
 #include <numeric>
 #include <string>
+#include <stdexcept>
 
 using namespace std;
 
@@ -18,6 +19,9 @@ public:
         : numerator_(numerator)
         , denominator_(denominator)
     {
+        if (denominator_ == 0) {
+            throw domain_error("denominator cannot be zero"s);
+        }
         Normalize();
     }
 
@@ -52,7 +56,7 @@ public:
 
     Rational& operator/=(Rational rational) {
         if (rational.Numerator() == 0) {
-            return *this;
+            throw invalid_argument("Can't divide by zero."s);
         }        
         numerator_ *= rational.Denominator();
         denominator_ *= rational.Numerator(); 
